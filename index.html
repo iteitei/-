@@ -3,17 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ババ抜きシミュレーター</title>
-
 <style>
-
 body{
     margin:0;
     padding:0;
     font-family:sans-serif;
     background:#f5f5f5;
-    overflow:hidden;
+    overflow:auto;           /* hidden → auto に変更（スクロールできるように） */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* 全体を0.8倍に縮小するためのwrapper（ここだけ追加） */
+.wrapper {
+    transform: scale(0.8);
+    transform-origin: center center;
+    width: 125%;
+    height: 125%;
 }
 
 .screen{
@@ -25,38 +34,32 @@ body{
     transition:opacity 1s;
     text-align:center;
 }
-
 #startScreen{
     background:#f5f5f5;
     opacity:1;
     z-index:4;
 }
-
 #screen1{
     background:#f5f5f5;
     opacity:0;
     z-index:3;
 }
-
 #screen2{
     background:#f5f5f5;
     opacity:0;
     z-index:2;
 }
-
 #endScreen{
     background:linear-gradient(to bottom, #87ceeb, #ffffff);
     color:#333333;
     opacity:0;
     z-index:1;
 }
-
 .title{
     font-size:60px;
     margin-top:120px;
     font-weight:bold;
 }
-
 .description{
     width:900px;
     margin:auto;
@@ -64,36 +67,30 @@ body{
     font-size:28px;
     line-height:1.8;
 }
-
 .startButton{
     margin-top:70px;
     font-size:30px;
     padding:20px 50px;
     cursor:pointer;
 }
-
 h1{
     margin-top:30px;
     font-size:32px;
 }
-
 h2{
     font-size:24px;
 }
-
 #infoText{
     font-size:28px;
     color:red;
     margin-top:20px;
 }
-
 .cards{
     display:flex;
     justify-content:center;
     gap:50px;
     margin-top:20px;
 }
-
 .card{
     width:220px;
     cursor:pointer;
@@ -101,268 +98,179 @@ h2{
     border-radius:15px;
     transition:0.2s;
 }
-
 .selected{
     border:6px solid gold;
     box-shadow:0 0 25px gold;
 }
-
 .confirmBox{
     margin-top:30px;
     display:none;
 }
-
 button{
     font-size:20px;
     padding:10px 25px;
     margin:10px;
     cursor:pointer;
 }
-
 #endMessage{
     margin-top:300px;
     font-size:45px;
     line-height:2;
     font-weight:bold;
 }
-
 </style>
 </head>
-
 <body>
 
-<div class="screen" id="startScreen">
+<!-- wrapper追加（ここだけ変更） -->
+<div class="wrapper">
 
+<div class="screen" id="startScreen">
     <div class="title">
         ババ抜きシミュレーター
     </div>
-
     <div class="description">
         これからあなたはババ抜きの最後の状況に立ってもらいます。<br>
         どちらかのカードがジョーカーです。<br>
         ジョーカーじゃないと思うものを選んでください。<br><br>
-
         途中から相手側から何らかの情報が与えられます。<br>
-
         「それは本当とは限りません」
     </div>
-
     <button class="startButton" id="startBtn">
         スタート
     </button>
-
 </div>
-
 <div class="screen" id="screen1">
-
     <h1>あなたはババ抜きの最後の状況にいます。</h1>
-
     <h2>
     どちらかはジョーカーです。ジョーカーじゃないと思うカードを選んでください。
     </h2>
-
     <div class="cards">
-
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="leftCard">
-
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="rightCard">
-
     </div>
-
     <div class="confirmBox" id="confirmBox1">
-
         <h2>こちらを選択しますか？</h2>
-
         <button id="yesBtn1">はい</button>
         <button id="noBtn1">いいえ</button>
-
     </div>
-
 </div>
-
 <div class="screen" id="screen2">
-
     <h1>あなたはババ抜きの最後の状況にいます。</h1>
-
     <h2>
     どちらかはジョーカーです。ジョーカーじゃないと思うカードを選んでください。
     </h2>
-
     <div id="infoText">
         「私はあなたから見て左にジョーカーを持っています」
     </div>
-
     <div class="cards">
-
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="leftCard2">
-
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="rightCard2">
-
     </div>
-
     <div class="confirmBox" id="confirmBox2">
-
         <h2>こちらを選択しますか？</h2>
-
         <button id="yesBtn2">はい</button>
         <button id="noBtn2">いいえ</button>
-
     </div>
-
 </div>
-
 <div class="screen" id="endScreen">
-
     <div id="endMessage">
         これでシミュレーションは終了です。<br>
         ご協力ありがとうございました。
     </div>
-
 </div>
 
-<script>
+</div> <!-- wrapper終わり -->
 
+<script>
 const startScreen = document.getElementById("startScreen");
 const screen1 = document.getElementById("screen1");
 const screen2 = document.getElementById("screen2");
 const endScreen = document.getElementById("endScreen");
-
 document.getElementById("startBtn").addEventListener("click", () => {
-
     startScreen.style.opacity = "0";
-
     setTimeout(() => {
-
         startScreen.style.zIndex = "1";
-
         screen1.style.opacity = "1";
         screen1.style.zIndex = "3";
-
     },1000);
-
 });
-
 const leftCard = document.getElementById("leftCard");
 const rightCard = document.getElementById("rightCard");
-
 const leftCard2 = document.getElementById("leftCard2");
 const rightCard2 = document.getElementById("rightCard2");
-
 const confirmBox1 = document.getElementById("confirmBox1");
 const confirmBox2 = document.getElementById("confirmBox2");
-
 let selected1 = null;
 let selected2 = null;
-
 leftCard.addEventListener("click", () => {
     selectCard1(leftCard);
 });
-
 rightCard.addEventListener("click", () => {
     selectCard1(rightCard);
 });
-
 function selectCard1(card){
-
     leftCard.classList.remove("selected");
     rightCard.classList.remove("selected");
-
     card.classList.add("selected");
-
     selected1 = card;
-
     confirmBox1.style.display = "block";
 }
-
 document.getElementById("yesBtn1").addEventListener("click", () => {
-
     confirmBox1.style.display = "none";
-
     screen1.style.opacity = "0";
-
     setTimeout(() => {
-
         screen1.style.zIndex = "1";
-
         screen2.style.opacity = "1";
         screen2.style.zIndex = "2";
-
     },1000);
-
 });
-
 document.getElementById("noBtn1").addEventListener("click", () => {
-
     leftCard.classList.remove("selected");
     rightCard.classList.remove("selected");
-
     selected1 = null;
-
     confirmBox1.style.display = "none";
-
 });
-
 leftCard2.addEventListener("click", () => {
     selectCard2(leftCard2);
 });
-
 rightCard2.addEventListener("click", () => {
     selectCard2(rightCard2);
 });
-
 function selectCard2(card){
-
     leftCard2.classList.remove("selected");
     rightCard2.classList.remove("selected");
-
     card.classList.add("selected");
-
     selected2 = card;
-
     confirmBox2.style.display = "block";
 }
-
 document.getElementById("yesBtn2").addEventListener("click", () => {
-
     confirmBox2.style.display = "none";
-
     screen2.style.opacity = "0";
-
     setTimeout(() => {
-
         screen2.style.zIndex = "1";
-
         endScreen.style.opacity = "1";
         endScreen.style.zIndex = "5";
-
     },1000);
-
 });
-
 document.getElementById("noBtn2").addEventListener("click", () => {
-
     leftCard2.classList.remove("selected");
     rightCard2.classList.remove("selected");
-
     selected2 = null;
-
     confirmBox2.style.display = "none";
-
 });
-
 </script>
-
 </body>
 </html>
