@@ -5,23 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ババ抜きシミュレーター</title>
 <style>
+/* 全体縮小用のラッパー */
+.wrapper {
+    transform: scale(0.8);
+    transform-origin: top left;
+    width: 125%;
+    height: 125%;
+    margin: 0 auto;
+}
+
+/* 元のbodyスタイル */
 body{
     margin:0;
     padding:0;
     font-family:sans-serif;
     background:#f5f5f5;
-    overflow:hidden;
-    
-    /* 全体を0.8倍に縮小 */
-    transform: scale(0.8);
-    transform-origin: top left;
-    width: 125%;
-    height: 125%;
-}
-
-/* 画面のスクロールを有効に */
-html, body {
-    overflow: auto;
+    overflow:auto;           /* hidden → auto に変更 */
+    display: flex;
+    justify-content: center;
 }
 
 .screen{
@@ -121,6 +122,10 @@ button{
 </style>
 </head>
 <body>
+
+<!-- ここにwrapperを追加 -->
+<div class="wrapper">
+
 <div class="screen" id="startScreen">
     <div class="title">
         ババ抜きシミュレーター
@@ -187,6 +192,8 @@ button{
         ご協力ありがとうございました。
     </div>
 </div>
+
+</div> <!-- wrapperの終わり -->
 
 <script>
 const startScreen = document.getElementById("startScreen");
