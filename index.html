@@ -4,18 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ババ抜きシミュレーター</title>
+
 <style>
+
 body{
     margin:0;
     padding:0;
     font-family:sans-serif;
-    background:#f5f5f5;
+    background:white;
     overflow:hidden;
-    transform: scale(0.8);
-    transform-origin: top left;
-    width: 125%;
-    height: 125%;
+    transform:scale(0.8);
+    transform-origin:top left;
+    width:125%;
+    height:125%;
 }
+
 .screen{
     width:100vw;
     height:100vh;
@@ -25,32 +28,50 @@ body{
     transition:opacity 1s;
     text-align:center;
 }
+
 #startScreen{
-    background:#f5f5f5;
+    background:white;
     opacity:1;
+    z-index:6;
+}
+
+#screen1{
+    background:white;
+    opacity:0;
+    z-index:5;
+}
+
+#screen2{
+    background:white;
+    opacity:0;
     z-index:4;
 }
-#screen1{
-    background:#f5f5f5;
+
+#screen3{
+    background:white;
     opacity:0;
     z-index:3;
 }
-#screen2{
-    background:#f5f5f5;
+
+#screen4{
+    background:white;
     opacity:0;
     z-index:2;
 }
+
 #endScreen{
-    background:linear-gradient(to bottom, #87ceeb, #ffffff);
-    color:#333333;
+    background:linear-gradient(to bottom,#87ceeb,#ffffff);
+    color:#333;
     opacity:0;
     z-index:1;
 }
+
 .title{
     font-size:60px;
     margin-top:120px;
     font-weight:bold;
 }
+
 .description{
     width:900px;
     margin:auto;
@@ -58,30 +79,38 @@ body{
     font-size:28px;
     line-height:1.8;
 }
+
 .startButton{
     margin-top:70px;
     font-size:30px;
     padding:20px 50px;
     cursor:pointer;
 }
+
 h1{
     margin-top:30px;
     font-size:32px;
 }
+
 h2{
     font-size:24px;
 }
-#infoText{
+
+#infoText,
+#infoText2{
     font-size:28px;
     color:red;
     margin-top:20px;
 }
+
 .cards{
     display:flex;
     justify-content:center;
+    align-items:center;
     gap:50px;
-    margin-top:20px;
+    margin-top:40px;
 }
+
 .card{
     width:220px;
     cursor:pointer;
@@ -89,177 +118,497 @@ h2{
     border-radius:15px;
     transition:0.2s;
 }
+
 .selected{
     border:6px solid gold;
     box-shadow:0 0 25px gold;
 }
+
 .confirmBox{
-    margin-top:30px;
+    margin-top:40px;
     display:none;
 }
+
+#confirmBox4{
+    margin-top:160px;
+}
+
 button{
     font-size:20px;
     padding:10px 25px;
     margin:10px;
     cursor:pointer;
 }
+
 #endMessage{
-    margin-top:300px;
-    font-size:45px;
+    margin-top:250px;
+    font-size:40px;
     line-height:2;
     font-weight:bold;
 }
+
+#answerText{
+    font-size:36px;
+    color:#cc0000;
+    margin-top:40px;
+}
+
+.lastCards{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:50px;
+    margin-top:70px;
+    margin-bottom:40px;
+    height:260px;
+}
+
+.raiseCard{
+    transform:translateY(-10px);
+}
+
+.normalCard{
+    transform:translateY(90px);
+}
+
 </style>
 </head>
+
 <body>
+
 <div class="screen" id="startScreen">
+
     <div class="title">
         ババ抜きシミュレーター
     </div>
+
     <div class="description">
         これからあなたはババ抜きの最後の状況に立ってもらいます。<br>
         どちらかのカードがジョーカーです。<br>
         ジョーカーじゃないと思うものを選んでください。<br><br>
+
         途中から相手側から何らかの情報が与えられます。<br>
+
         「それは本当とは限りません」
     </div>
+
     <button class="startButton" id="startBtn">
         スタート
     </button>
+
 </div>
+
 <div class="screen" id="screen1">
+
     <h1>あなたはババ抜きの最後の状況にいます。</h1>
+
     <h2>
     どちらかはジョーカーです。ジョーカーじゃないと思うカードを選んでください。
     </h2>
+
     <div class="cards">
+
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="leftCard">
+
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="rightCard">
+
     </div>
+
     <div class="confirmBox" id="confirmBox1">
+
         <h2>こちらを選択しますか？</h2>
+
         <button id="yesBtn1">はい</button>
         <button id="noBtn1">いいえ</button>
+
     </div>
+
 </div>
+
 <div class="screen" id="screen2">
+
     <h1>あなたはババ抜きの最後の状況にいます。</h1>
+
     <h2>
     どちらかはジョーカーです。ジョーカーじゃないと思うカードを選んでください。
     </h2>
+
     <div id="infoText">
         「私はあなたから見て左にジョーカーを持っています」
     </div>
+
     <div class="cards">
+
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="leftCard2">
+
         <img
         src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
         class="card"
         id="rightCard2">
+
     </div>
+
     <div class="confirmBox" id="confirmBox2">
+
         <h2>こちらを選択しますか？</h2>
+
         <button id="yesBtn2">はい</button>
         <button id="noBtn2">いいえ</button>
+
     </div>
+
 </div>
+
+<div class="screen" id="screen3">
+
+    <h1>あなたはババ抜きの最後の状況にいます。</h1>
+
+    <h2>
+    どちらかはジョーカーです。ジョーカーじゃないと思うカードを選んでください。
+    </h2>
+
+    <div id="infoText2">
+        「私は右にジョーカーをもっていません」
+    </div>
+
+    <div class="cards">
+
+        <img
+        src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+        class="card"
+        id="leftCard3">
+
+        <img
+        src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+        class="card"
+        id="rightCard3">
+
+    </div>
+
+    <div class="confirmBox" id="confirmBox3">
+
+        <h2>こちらを選択しますか？</h2>
+
+        <button id="yesBtn3">はい</button>
+        <button id="noBtn3">いいえ</button>
+
+    </div>
+
+</div>
+
+<div class="screen" id="screen4">
+
+    <h1>あなたはババ抜きの最後の状況にいます。</h1>
+
+    <h2>
+    どちらかはジョーカーです。ジョーカーじゃないと思うカードを選んでください。
+    </h2>
+
+    <div class="lastCards">
+
+        <img
+        src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+        class="card raiseCard"
+        id="leftCard4">
+
+        <img
+        src="https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg"
+        class="card normalCard"
+        id="rightCard4">
+
+    </div>
+
+    <div class="confirmBox" id="confirmBox4">
+
+        <h2>こちらを選択しますか？</h2>
+
+        <button id="yesBtn4">はい</button>
+        <button id="noBtn4">いいえ</button>
+
+    </div>
+
+</div>
+
 <div class="screen" id="endScreen">
+
     <div id="endMessage">
         これでシミュレーションは終了です。<br>
-        ご協力ありがとうございました。
+        ご協力ありがとうございました。<br><br>
+
+        <div id="answerText"></div>
     </div>
+
 </div>
 
 <script>
-// スクリプト部分は一切変更なし
+
 const startScreen = document.getElementById("startScreen");
 const screen1 = document.getElementById("screen1");
 const screen2 = document.getElementById("screen2");
+const screen3 = document.getElementById("screen3");
+const screen4 = document.getElementById("screen4");
 const endScreen = document.getElementById("endScreen");
-
-document.getElementById("startBtn").addEventListener("click", () => {
-    startScreen.style.opacity = "0";
-    setTimeout(() => {
-        startScreen.style.zIndex = "1";
-        screen1.style.opacity = "1";
-        screen1.style.zIndex = "3";
-    },1000);
-});
 
 const leftCard = document.getElementById("leftCard");
 const rightCard = document.getElementById("rightCard");
+
 const leftCard2 = document.getElementById("leftCard2");
 const rightCard2 = document.getElementById("rightCard2");
+
+const leftCard3 = document.getElementById("leftCard3");
+const rightCard3 = document.getElementById("rightCard3");
+
+const leftCard4 = document.getElementById("leftCard4");
+const rightCard4 = document.getElementById("rightCard4");
+
 const confirmBox1 = document.getElementById("confirmBox1");
 const confirmBox2 = document.getElementById("confirmBox2");
+const confirmBox3 = document.getElementById("confirmBox3");
+const confirmBox4 = document.getElementById("confirmBox4");
 
 let selected1 = null;
 let selected2 = null;
+let selected3 = null;
+let selected4 = null;
 
-leftCard.addEventListener("click", () => { selectCard1(leftCard); });
-rightCard.addEventListener("click", () => { selectCard1(rightCard); });
+let answers = "";
+
+document.getElementById("startBtn").addEventListener("click", () => {
+
+    startScreen.style.opacity = "0";
+
+    setTimeout(() => {
+
+        startScreen.style.zIndex = "1";
+
+        screen1.style.opacity = "1";
+        screen1.style.zIndex = "10";
+
+    },1000);
+
+});
+
+leftCard.addEventListener("click", () => {
+    selectCard1(leftCard);
+});
+
+rightCard.addEventListener("click", () => {
+    selectCard1(rightCard);
+});
 
 function selectCard1(card){
+
     leftCard.classList.remove("selected");
     rightCard.classList.remove("selected");
+
     card.classList.add("selected");
+
     selected1 = card;
+
     confirmBox1.style.display = "block";
 }
 
 document.getElementById("yesBtn1").addEventListener("click", () => {
+
+    if(selected1 === rightCard){
+        answers += "1";
+    }
+    else{
+        answers += "0";
+    }
+
     confirmBox1.style.display = "none";
+
     screen1.style.opacity = "0";
+
     setTimeout(() => {
+
         screen1.style.zIndex = "1";
+
         screen2.style.opacity = "1";
-        screen2.style.zIndex = "2";
+        screen2.style.zIndex = "10";
+
     },1000);
+
 });
 
 document.getElementById("noBtn1").addEventListener("click", () => {
+
     leftCard.classList.remove("selected");
     rightCard.classList.remove("selected");
-    selected1 = null;
+
     confirmBox1.style.display = "none";
 });
 
-leftCard2.addEventListener("click", () => { selectCard2(leftCard2); });
-rightCard2.addEventListener("click", () => { selectCard2(rightCard2); });
+leftCard2.addEventListener("click", () => {
+    selectCard2(leftCard2);
+});
+
+rightCard2.addEventListener("click", () => {
+    selectCard2(rightCard2);
+});
 
 function selectCard2(card){
+
     leftCard2.classList.remove("selected");
     rightCard2.classList.remove("selected");
+
     card.classList.add("selected");
+
     selected2 = card;
+
     confirmBox2.style.display = "block";
 }
 
 document.getElementById("yesBtn2").addEventListener("click", () => {
+
+    if(selected2 === rightCard2){
+        answers += "1";
+    }
+    else{
+        answers += "0";
+    }
+
     confirmBox2.style.display = "none";
+
     screen2.style.opacity = "0";
+
     setTimeout(() => {
+
         screen2.style.zIndex = "1";
-        endScreen.style.opacity = "1";
-        endScreen.style.zIndex = "5";
+
+        screen3.style.opacity = "1";
+        screen3.style.zIndex = "10";
+
     },1000);
+
 });
 
 document.getElementById("noBtn2").addEventListener("click", () => {
+
     leftCard2.classList.remove("selected");
     rightCard2.classList.remove("selected");
-    selected2 = null;
+
     confirmBox2.style.display = "none";
 });
+
+leftCard3.addEventListener("click", () => {
+    selectCard3(leftCard3);
+});
+
+rightCard3.addEventListener("click", () => {
+    selectCard3(rightCard3);
+});
+
+function selectCard3(card){
+
+    leftCard3.classList.remove("selected");
+    rightCard3.classList.remove("selected");
+
+    card.classList.add("selected");
+
+    selected3 = card;
+
+    confirmBox3.style.display = "block";
+}
+
+document.getElementById("yesBtn3").addEventListener("click", () => {
+
+    if(selected3 === rightCard3){
+        answers += "1";
+    }
+    else{
+        answers += "0";
+    }
+
+    confirmBox3.style.display = "none";
+
+    screen3.style.opacity = "0";
+
+    setTimeout(() => {
+
+        screen3.style.zIndex = "1";
+
+        screen4.style.opacity = "1";
+        screen4.style.zIndex = "10";
+
+    },1000);
+
+});
+
+document.getElementById("noBtn3").addEventListener("click", () => {
+
+    leftCard3.classList.remove("selected");
+    rightCard3.classList.remove("selected");
+
+    confirmBox3.style.display = "none";
+});
+
+leftCard4.addEventListener("click", () => {
+    selectCard4(leftCard4);
+});
+
+rightCard4.addEventListener("click", () => {
+    selectCard4(rightCard4);
+});
+
+function selectCard4(card){
+
+    leftCard4.classList.remove("selected");
+    rightCard4.classList.remove("selected");
+
+    card.classList.add("selected");
+
+    selected4 = card;
+
+    confirmBox4.style.display = "block";
+}
+
+document.getElementById("yesBtn4").addEventListener("click", () => {
+
+    if(selected4 === rightCard4){
+        answers += "1";
+    }
+    else{
+        answers += "0";
+    }
+
+    document.getElementById("answerText").innerHTML =
+    'この数字をフォームに回答してください<br>「' + answers + '」';
+
+    confirmBox4.style.display = "none";
+
+    screen4.style.opacity = "0";
+
+    setTimeout(() => {
+
+        screen4.style.zIndex = "1";
+
+        endScreen.style.opacity = "1";
+        endScreen.style.zIndex = "10";
+
+    },1000);
+
+});
+
+document.getElementById("noBtn4").addEventListener("click", () => {
+
+    leftCard4.classList.remove("selected");
+    rightCard4.classList.remove("selected");
+
+    confirmBox4.style.display = "none";
+});
+
 </script>
+
 </body>
 </html>
